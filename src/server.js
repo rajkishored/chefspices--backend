@@ -4,6 +4,11 @@ require("dotenv").config();
 const AppDataSource = require("./data-source");
 const authRoutes = require("./routes/authRoutes");
 const roleRoutes = require("./routes/roleRoutes");
+const districtRoutes = require("./routes/districtRoutes");
+const cityRoutes = require("./routes/cityRoutes");
+const routeRoutes = require("./routes/routeRoutes");
+const PlaceRoutes = require("./routes/placeRoutes");
+
 const path = require("path");
 
 const swaggerJsDoc = require("swagger-jsdoc");
@@ -49,7 +54,10 @@ app.use("/api/auth", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use("/api/auths", authRoutes);
 app.use("/api/roles", roleRoutes);
-
+app.use("/api/district", districtRoutes);
+app.use("/api/city", cityRoutes);
+app.use("/api/route", routeRoutes);
+app.use("/api/place", PlaceRoutes);
 
 const PORT = process.env.PORT || 5000;
 
