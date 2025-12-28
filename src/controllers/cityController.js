@@ -38,6 +38,43 @@ const createCity = async (req, res) => {
       .json({ message: "Error creating city", error: err.message });
   }
 };
+
+const updateCity = async (req, res) => {
+  const { name, id } = req.body;
+
+  if (!name || !id) {
+    return res
+      .status(400)
+      .json({ message: "City name and id is required" });
+  }
+
+  try {
+    const cityRepo = AppDataSource.getRepository("City");
+    const districtRepo = AppDataSource.getRepository("District");
+
+    // const district = await districtRepo.findOne({ where: { id: district_id } });
+    // if (!district) {
+    //   return res.status(400).json({ message: "Invalid district_id" });
+    // }
+
+  
+    const city = await cityRepo.findOne({ where: { id } });
+    if (!city) {
+      return res.status(400).json({ message: "City not found" });
+    }
+
+    city.name= name
+    await cityRepo.save(city);
+
+    res
+      .status(201)
+      .json({ message: "city updated successfully", city });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error updating city", error: err.message });
+  }
+};
 const getAllCity = async (req, res) => {
   try {
     const cityRepo = AppDataSource.getRepository("City");
@@ -78,7 +115,7 @@ const getRouteByCityId = async (req, res) => {
     const { id } = req.query;
 
     const cityRepo = AppDataSource.getRepository("City");
-    const routeRepo = AppDataSource.getRepository("Route");
+    const routeRepo = AppDataSource.getRepository("Routee");
 
     const city = await cityRepo.findOne({
       where: { id: parseInt(id) },
@@ -104,4 +141,4 @@ const getRouteByCityId = async (req, res) => {
   }
 };
 
-module.exports = { createCity, getCity, getRouteByCityId, getAllCity };
+module.exports = { createCity, getCity, getRouteByCityId, getAllCity,updateCity };

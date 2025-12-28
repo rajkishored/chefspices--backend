@@ -2,20 +2,20 @@ const AppDataSource = require("../data-source");
 const Role = require("../entities/Role"); // if you use require for your entity
 
 const createRole = async (req, res) => {
-  const { name } = req.body;
+  const { roleName } = req.body;
 
-  if (!name) return res.status(400).json({ message: "Role name is required" });
+  if (!roleName) return res.status(400).json({ message: "Role name is required" });
 
   try {
     const roleRepo = AppDataSource.getRepository("Role");
 
     // Check if role already exists
-    const existingRole = await roleRepo.findOne({ where: { name } });
+    const existingRole = await roleRepo.findOne({ where: { roleName } });
     if (existingRole) {
       return res.status(400).json({ message: "Role already exists" });
     }
 
-    const role = roleRepo.create({ name });
+    const role = roleRepo.create({ roleName  });
     await roleRepo.save(role);
 
     res.status(201).json({ message: "Role created successfully", role });

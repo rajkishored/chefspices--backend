@@ -1,7 +1,7 @@
 const { EntitySchema } = require("typeorm");
 
 module.exports = new EntitySchema({
-  name: "Route",
+  name: "Routee",
   tableName: "routes",
   columns: {
     id: {
@@ -13,6 +13,7 @@ module.exports = new EntitySchema({
       type: "varchar",
       unique: true,
     },
+    
     createdDate: {
       type: "timestamp",
       createDate: true,
@@ -27,18 +28,17 @@ module.exports = new EntitySchema({
     },
     places: {
       target: "Place",
-      type: "one-to-many",
+      type: "many-to-one",
       inverseSide: "route", // ✅ a route has many places
     },
-    // users: {
-    //   target: "User",
-    //   type: "many-to-many",
-    //   joinTable: {
-    //     name: "user_routes",
-    //     joinColumn: { name: "route_id", referencedColumnName: "id" },
-    //     inverseJoinColumn: { name: "user_id", referencedColumnName: "id" },
-    //   },
-    //   inverseSide: "routes",
-    // },
+    users: {
+      target: "User",
+      type: "many-to-one",
+    joinColumn: {
+    name: "user_id",
+  },
+  nullable: true, // ✅ THIS IS THE KEY
+  onDelete: "SET NULL",
+    },
   },
 });

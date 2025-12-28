@@ -14,6 +14,11 @@ module.exports = new EntitySchema({
     name: {
       type: "varchar",
     },
+     order: {
+    
+      type: "int",
+    
+    },
     description: {
       type: "text",
       nullable: true,
@@ -25,7 +30,7 @@ module.exports = new EntitySchema({
   },
   relations: {
     route: {
-      target: "Route",
+      target: "Routee",
       type: "many-to-one",
       joinColumn: { name: "route_id" },
       onDelete: "CASCADE",

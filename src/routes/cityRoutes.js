@@ -4,7 +4,10 @@ const {
   getCity,
   getRouteByCityId,
   getAllCity,
+  updateCity
 } = require("../controllers/cityController");
+
+const { authenticateToken } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -19,6 +22,8 @@ const router = express.Router();
  * @swagger
  * /api/city:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Create a new City
  *     tags: [City]
  *     requestBody:
@@ -43,24 +48,61 @@ const router = express.Router();
  *       400:
  *         description: City already exists or invalid district
  */
-router.post("/", createCity);
+router.post("/", authenticateToken, createCity);
+
+
+/**
+ * @swagger
+ * /api/city:
+ *   put:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: update  City
+ *     tags: [City]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - id
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "city1"
+ *               id:
+ *                 type: integer
+ *                 example: 1
+ *     responses:
+ *       201:
+ *         description: City updated successfully
+ *       400:
+ *         description: City already exists or invalid district
+ */
+router.put("/", authenticateToken, updateCity);
 
 /**
  * @swagger
  * /api/city/all:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Get all cities
  *     tags: [City]
  *     responses:
  *       200:
- *         description: List of city
+ *         description: List of cities
  */
-router.get("/all", getAllCity);
+router.get("/all", authenticateToken, getAllCity);
 
 /**
  * @swagger
  * /api/city:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Get all cities or filter by district_id
  *     tags: [City]
  *     parameters:
@@ -73,13 +115,15 @@ router.get("/all", getAllCity);
  *       200:
  *         description: List of cities
  */
-router.get("/", getCity);
+router.get("/", authenticateToken, getCity);
 
 /**
  * @swagger
  * /api/city/by-city:
  *   get:
- *     summary: Get all routes for specif city
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Get all routes for a specific city
  *     tags: [City]
  *     parameters:
  *       - in: query
@@ -87,14 +131,13 @@ router.get("/", getCity);
  *         required: true
  *         schema:
  *           type: integer
- *         description: City Id
+ *         description: City ID
  *     responses:
  *       200:
  *         description: List of routes for the given city
  *       404:
- *         description: routes not found
+ *         description: Routes not found
  */
-
-router.get("/by-city", getRouteByCityId);
+router.get("/by-city", authenticateToken, getRouteByCityId);
 
 module.exports = router;

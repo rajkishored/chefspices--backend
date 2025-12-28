@@ -26,7 +26,7 @@ module.exports = new EntitySchema({
       onDelete: "CASCADE",
     },
     routes: {
-      target: "Route",
+      target: "Routee",
       type: "one-to-many",
       inverseSide: "city",
     },

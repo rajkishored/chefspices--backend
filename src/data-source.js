@@ -4,9 +4,10 @@ require("dotenv").config();
 
 const User = require("./entities/User");
 const Role = require("./entities/Role");
+const Sales = require("./entities/Sales");
 const District = require("./entities/District");
 const City = require("./entities/City");
-const Route = require("./entities/Route");
+const Routee = require("./entities/Routee");
 const Place = require("./entities/Place");
 
 const AppDataSource = new DataSource({
@@ -18,7 +19,7 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Role, District, City, Route, Place],
+  entities: [User, Role, District, City, Routee, Place,Sales],
 });
 
 module.exports = AppDataSource;

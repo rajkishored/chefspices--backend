@@ -15,7 +15,7 @@ const router = express.Router();
  * /api/roles:
  *   post:
  *     summary: Create a new role
- *     tags: [Roles]
+ *     tags: [Role]
  *     requestBody:
  *       required: true
  *       content:
@@ -23,9 +23,9 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             required:
- *               - name
+ *               - roleName
  *             properties:
- *               name:
+ *               roleName:
  *                 type: string
  *                 example: admin
  *     responses:
@@ -41,11 +41,11 @@ router.post("/", createRole);
  * /api/roles:
  *   get:
  *     summary: Get all roles
- *     tags: [Roles]
+ *     tags: [Role]
  *     responses:
  *       200:
  *         description: List of roles
  */
-router.get("/get", getRoles);
+router.get("/", getRoles);
 
 module.exports = router;
